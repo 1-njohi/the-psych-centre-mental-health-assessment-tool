@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Mental Health Self-Check — YEBO</title>
+<style>
+:root {
+  --ink: #1c2b2b;
+  --ink-soft: #4a5d5d;
+  --muted: #7a8a8a;
+  --paper: #fbfaf7;
+  --card: #ffffff;
+  --line: #e5e2da;
+  --brand: #1f5c53;
+  --brand-soft: #e6f0ed;
+  --brand-hover: #174640;
+  --accent: #b45309;
+  --good: #2f7d5c;
+  --warn: #b45309;
+  --alert: #9a3412;
+  --severe: #7f1d1d;
+  --radius: 4px;
+  --radius-lg: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.65;
+  font-size: 16px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.brand-bar {
+  background: var(--brand);
+  color: #fff;
+  padding: 14px 24px;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.brand-bar .brand-mark { display: flex; align-items: center; gap: 12px; max-width: 720px; margin: 0 auto; }
+.brand-bar .dot { width: 8px; height: 8px; background: #fff; border-radius: 50%; opacity: 0.7; }
+main { flex: 1; padding: 40px 24px 80px; }
+.container { max-width: 680px; margin: 0 auto; }
+h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: 18px;
+}
+h2 {
+  font-family: Georgia, serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+h3 {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  color: var(--brand);
+  margin-bottom: 12px;
+}
+p { margin-bottom: 16px; color: var(--ink-soft); }
+p.lead { font-size: 1.05rem; color: var(--ink); }
+.eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  margin-bottom: 20px;
+}
+.rule {
+  height: 1px;
+  background: var(--line);
+  border: none;
+  margin: 22px 0;
+}
+.disclaimer {
+  background: #fdfaf3;
+  border-left: 3px solid var(--accent);
+  padding: 16px 18px;
+  font-size: 0.92rem;
+  color: #5a4214;
+  margin: 20px 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.disclaimer strong { color: #4a3510; }
+.crisis {
+  background: #fdf3f2;
+  border-left: 3px solid var(--alert);
+  padding: 16px 18px;
+  font-size: 0.92rem;
+  color: #4a1e1a;
+  margin: 20px 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.crisis strong { color: var(--alert); }
+.privacy-note {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 20px;
+  padding: 16px;
+  border-top: 1px dashed var(--line);
+}
+.progress {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 32px;
+}
+.progress-seg {
+  flex: 1;
+  height: 3px;
+  background: var(--line);
+  border-radius: 2px;
+  transition: background 0.3s;
+}
+.progress-seg.done { background: var(--brand); }
+.progress-seg.active { background: var(--brand); opacity: 0.5; }
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.section-head .label {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+.section-head .count {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.q { padding: 24px 0; border-bottom: 1px solid var(--line); }
+.q:last-of-type { border-bottom: none; padding-bottom: 8px; }
+.q-text {
+  font-size: 1rem;
+  color: var(--ink);
+  margin-bottom: 16px;
+  line-height: 1.55;
+}
+.q-num {
+  display: inline-block;
+  font-weight: 600;
+  color: var(--brand);
+  margin-right: 6px;
+}
+.opts { display: flex; flex-direction: column; gap: 8px; }
+.opts.row { flex-direction: row; gap: 10px; }
+.opts.row .opt { flex: 1; min-width: 0; }
+.opt {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.12s;
+  user-select: none;
+  color: var(--ink-soft);
+}
+.opt:hover { border-color: var(--brand); }
+.opt input { position: absolute; opacity: 0; pointer-events: none; }
+.opt .mark {
+  width: 16px; height: 16px;
+  border: 1.5px solid var(--line);
+  border-radius: 50%;
+  margin-right: 12px;
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.12s;
+}
+.opt.selected {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--ink);
+  font-weight: 500;
+}
+.opt.selected .mark { border-color: var(--brand); }
+.opt.selected .mark::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+button {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 14px 26px;
+  border-radius: var(--radius);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-primary {
+  background: var(--brand);
+  color: #fff;
+  width: 100%;
+}
+.btn-primary:hover:not(:disabled) { background: var(--brand-hover); }
+.btn-primary:disabled {
+  background: var(--line);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--brand);
+  border-color: var(--line);
+}
+.btn-ghost:hover { border-color: var(--brand); }
+.actions { display: flex; gap: 10px; margin-top: 24px; }
+.actions button { flex: 1; }
+.result {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line);
+}
+.result:last-of-type { border-bottom: none; }
+.result-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.result-name { font-family: Georgia, serif; font-size: 1.1rem; }
+.result-score {
+  font-family: Georgia, serif;
+  font-size: 1.6rem;
+  color: var(--brand);
+  font-variant-numeric: tabular-nums;
+}
+.result-score small {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+.b-low { background: #e6f2eb; color: var(--good); }
+.b-mod { background: #fdf4e3; color: var(--warn); }
+.b-high { background: #fce9df; color: var(--alert); }
+.b-sev { background: #fbe4e4; color: var(--severe); }
+.result-text { font-size: 0.95rem; color: var(--ink-soft); }
+footer {
+  padding: 24px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  letter-spacing: 0.02em;
+}
+@media (min-width: 640px) {
+  main { padding: 60px 24px 100px; }
+  h1 { font-size: 2.4rem; }
+  .card { padding: 44px; }
+}
+@media print {
+  body { background: #fff; }
+  .brand-bar, footer, .actions, .progress, .no-print { display: none !important; }
+  main { padding: 0; }
+  .card { border: none; padding: 0; margin-bottom: 24px; }
+  .result { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<header class="brand-bar">
+  <div class="brand-mark">
+    <span class="dot"></span>
+    <span id="orgName">The Psych Centre</span>
+    <span style="opacity:.4; margin:0 4px;">·</span>
+    <span style="opacity:.75; font-weight:400;">Mental Health Self-Check</span>
+  </div>
+</header>
+
+<main>
+  <div class="container" id="app"></div>
+</main>
+
+<footer>
+  <div id="footerOrg">The Psych Centre</div>
+  <div style="margin-top:6px;">Confidential · Anonymous · Nothing is stored</div>
+</footer>
+
+<script>
+/* ============================================================
+   CONFIG — swap these values to rebrand for your organization
+   ============================================================ */
+const CONFIG = {
+  orgName: "The Psych Centre",
+  crisisLine: "Kenya Red Cross · 1199 (toll-free)",
+  crisisLineAlt: "Befrienders Kenya · +254 722 178 177",
+  referral: "the counsellor on-site or your Employee Assistance Programme"
+};
+
+document.getElementById('orgName').textContent = CONFIG.orgName;
+document.getElementById('footerOrg').textContent = CONFIG.orgName;
+
+/* ============================================================
+   INSTRUMENTS
+   ============================================================ */
+const INSTRUMENTS = [
+  {
+    id: 'dast10',
+    name: 'DAST-10',
+    title: 'Drug Use',
+    intro: 'These questions ask about your drug use over the past 12 months. Please answer honestly — your responses are anonymous and never leave your device.',
+    type: 'yesno',
+    items: [
+      'Have you used drugs other than those required for medical reasons?',
+      'Do you use more than one drug at a time?',
+      'Are you unable to stop using drugs when you want to?',
+      'Have you ever had blackouts or flashbacks as a result of drug use?',
+      'Do you ever feel bad or guilty about your drug use?',
+      'Does your spouse (or parents) ever complain about your involvement with drugs?',
+      'Have you neglected your family because of your use of drugs?',
+      'Have you engaged in illegal activities in order to obtain drugs?',
+      'Have you ever experienced withdrawal symptoms (felt sick) when you stopped taking drugs?',
+      'Have you had medical problems as a result of your drug use (e.g. memory loss, hepatitis, convulsions, bleeding)?'
+    ],
+    // NOTE: In this reworded version, "Yes" on Q3 DOES earn a point (matches standard DAST-10 intent).
+    score: (a) => a.filter(x => x === 'Yes').length,
+    max: 10,
+    bands: [
+      { max: 0, label: 'No problems', cls: 'b-low', text: 'Your responses do not indicate any current drug-related problems.' },
+      { max: 2, label: 'Low', cls: 'b-low', text: 'Your responses suggest a low level of concern. It may be worth monitoring and reassessing at a later date.' },
+      { max: 5, label: 'Moderate', cls: 'b-mod', text: 'Your responses suggest a moderate level of concern. Further investigation with a healthcare professional is recommended.' },
+      { max: 8, label: 'Substantial', cls: 'b-high', text: 'Your responses suggest a substantial level of concern. An intensive assessment with a qualified professional is recommended.' },
+      { max: 99, label: 'Severe', cls: 'b-sev', text: 'Your responses suggest a severe level of concern. Please reach out to a qualified professional for an intensive assessment.' }
+    ]
+  },
+  {
+    id: 'cage',
+    name: 'CAGE',
+    title: 'Alcohol Use',
+    intro: 'Four short questions about your alcohol use. Please answer honestly.',
+    type: 'yesno',
+    items: [
+      'Have you ever felt you should cut down on your drinking?',
+      'Have people annoyed you by criticising your drinking?',
+      'Have you ever felt bad or guilty about your drinking?',
+      "Have you ever had a drink first thing in the morning to steady your nerves or get rid of a hangover?"
+    ],
+    score: (a) => a.filter(x => x === 'Yes').length,
+    max: 4,
+    bands: [
+      { max: 1, label: 'Negative screen', cls: 'b-low', text: 'Your responses do not indicate a significant concern related to alcohol use.' },
+      { max: 99, label: 'Positive screen', cls: 'b-mod', text: 'Your responses indicate a clinically significant concern. Further assessment with a healthcare professional is recommended.' }
+    ]
+  },
+  {
+    id: 'bat12',
+    name: 'BAT-12',
+    title: 'Burnout',
+    intro: 'Over the past few weeks, how often have you felt the following?',
+    type: 'likert',
+    scale: ['Never', 'Rarely', 'Sometimes', 'Often', 'Always'],
+    items: [
+      'I feel tired before I go to work.',
+      'After work, I need more time to relax than I used to.',
+      'I feel exhausted after a day at work.',
+      'I feel physically exhausted.',
+      'I struggle to find enthusiasm for my work.',
+      'I feel indifferent about my work.',
+      'I doubt the significance of my work.',
+      'I feel disconnected from my work.',
+      'I have trouble concentrating at work.',
+      'I forget things at work.',
+      'I feel emotionally drained by my work.',
+      'I am irritable at work.'
+    ],
+    score: (a) => a.reduce((s, x) => s + (x ?? 0), 0),
+    max: 48,
+    bands: [
+      { max: 12, label: 'Low', cls: 'b-low', text: 'Your responses suggest low burnout symptoms. Continue to monitor your energy and maintain healthy boundaries.' },
+      { max: 24, label: 'Moderate', cls: 'b-mod', text: 'Your responses suggest moderate burnout symptoms. It may be helpful to review your workload, rest, and support systems.' },
+      { max: 36, label: 'High', cls: 'b-high', text: 'Your responses suggest high burnout symptoms. Consider speaking with a professional and taking steps to reduce strain.' },
+      { max: 99, label: 'Severe', cls: 'b-sev', text: 'Your responses suggest severe burnout symptoms. Please prioritise rest and reach out to a qualified professional.' }
+    ]
+  },
+  {
+    id: 'who5',
+    name: 'WHO-5',
+    title: 'Well-Being',
+    intro: 'Over the past two weeks, how much of the time have the following been true for you?',
+    type: 'likert',
+    scale: ['At no time', 'Some of the time', 'Less than half of the time', 'More than half of the time', 'Most of the time', 'All of the time'],
+    items: [
+      'I have felt cheerful and in good spirits.',
+      'I have felt calm and relaxed.',
+      'I have felt active and vigorous.',
+      'I woke up feeling fresh and rested.',
+      'My daily life has been filled with things that interest me.'
+    ],
+    score: (a) => a.reduce((s, x) => s + (x ?? 0), 0) * 4,
+    max: 100,
+    bands: [
+      { max: 50, label: 'Poor well-being', cls: 'b-high', text: 'Your responses suggest poor well-being. Screening for depression is recommended, and it may be worth speaking with a professional.' },
+      { max: 68, label: 'Moderate well-being', cls: 'b-mod', text: 'Your responses suggest moderate well-being. Continue to nurture the things that give you energy.' },
+      { max: 999, label: 'Good well-being', cls: 'b-low', text: 'Your responses suggest good well-being. Keep doing what supports your mental health.' }
+    ]
+  }
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const state = {
+  screen: 'welcome',
+  section: 0,
+  answers: Object.fromEntries(INSTRUMENTS.map(i => [i.id, []]))
+};
+
+const app = document.getElementById('app');
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function render() {
+  if (state.screen === 'welcome') return renderWelcome();
+  if (state.screen === 'section') return renderSection();
+  return renderResults();
+}
+
+function renderWelcome() {
+  app.innerHTML = `
+    <div class="eyebrow">An anonymous self-screening tool</div>
+    <h1>Mental Health Self-Check</h1>
+    <p class="lead">This brief self-check covers four areas — drug use, alcohol use, burnout, and general well-being. It takes about five minutes.</p>
+    <p>You will see your own results at the end, along with guidance on what each score means.</p>
+
+    <div class="disclaimer">
+      <strong>Important — please read.</strong><br>
+      This is a <strong>screening tool</strong>, not a diagnosis. Screening tools can suggest that something is worth looking at more closely, but only a qualified professional can diagnose a mental health condition. If any result concerns you, please speak with a professional.
+    </div>
+
+    <div class="disclaimer">
+      <strong>About your privacy.</strong><br>
+      Everything you answer stays on this device. Nothing is sent to a server, stored, or shared. Closing or refreshing this page erases your responses completely. You do not need to give your name, email, or any identifying information.
+    </div>
+
+    <hr class="rule">
+    <div class="actions">
+      <button class="btn-primary" onclick="startCheck()">Begin</button>
+    </div>
+    <p class="privacy-note">Organised by ${escapeHtml(CONFIG.orgName)}. If you would like to speak with someone after this check, please approach ${escapeHtml(CONFIG.referral)}.</p>
+  `;
+}
+
+function renderSection() {
+  const inst = INSTRUMENTS[state.section];
+  const answers = state.answers[inst.id];
+
+  const progress = INSTRUMENTS.map((_, i) => {
+    if (i < state.section) return '<div class="progress-seg done"></div>';
+    if (i === state.section) return '<div class="progress-seg active"></div>';
+    return '<div class="progress-seg"></div>';
+  }).join('');
+
+  let questionsHtml = '';
+  inst.items.forEach((item, idx) => {
+    const current = answers[idx];
+    let opts;
+    if (inst.type === 'yesno') {
+      opts = ['Yes', 'No'].map(v => `
+        <label class="opt ${current === v ? 'selected' : ''}">
+          <input type="radio" name="q${idx}" value="${v}" ${current === v ? 'checked' : ''} onchange="setAnswer(${idx}, '${v}')">
+          <span class="mark"></span>${v}
+        </label>`).join('');
+      questionsHtml += `
+        <div class="q" data-idx="${idx}">
+          <div class="q-text"><span class="q-num">${idx + 1}.</span>${escapeHtml(item)}</div>
+          <div class="opts row">${opts}</div>
+        </div>`;
+    } else {
+      opts = inst.scale.map((label, sIdx) => `
+        <label class="opt ${current === sIdx ? 'selected' : ''}">
+          <input type="radio" name="q${idx}" value="${sIdx}" ${current === sIdx ? 'checked' : ''} onchange="setAnswer(${idx}, ${sIdx})">
+          <span class="mark"></span>${escapeHtml(label)}
+        </label>`).join('');
+      questionsHtml += `
+        <div class="q" data-idx="${idx}">
+          <div class="q-text"><span class="q-num">${idx + 1}.</span>${escapeHtml(item)}</div>
+          <div class="opts">${opts}</div>
+        </div>`;
+    }
+  });
+
+  const isLast = state.section === INSTRUMENTS.length - 1;
+  const allAnswered = answers.length === inst.items.length && answers.every(a => a !== undefined && a !== null);
+
+  app.innerHTML = `
+    <div class="progress">${progress}</div>
+    <div class="section-head">
+      <span class="label">Section ${state.section + 1} of ${INSTRUMENTS.length}</span>
+      <span class="count">${inst.name}</span>
+    </div>
+    <h2>${escapeHtml(inst.title)}</h2>
+    <p style="margin-top:8px; margin-bottom:28px;">${escapeHtml(inst.intro)}</p>
+
+    ${questionsHtml}
+
+    <div class="actions">
+      ${state.section > 0 ? `<button class="btn-ghost" onclick="prevSection()">Back</button>` : ''}
+      <button class="btn-primary" id="nextBtn" ${allAnswered ? '' : 'disabled'} onclick="nextSection()">
+        ${isLast ? 'See My Results' : 'Continue'}
+      </button>
+    </div>
+    <p class="privacy-note">Your answers stay on this device.</p>
+  `;
+}
+
+function renderResults() {
+  let anyConcern = false;
+  const resultBlocks = INSTRUMENTS.map(inst => {
+    const raw = inst.score(state.answers[inst.id]);
+    const band = inst.bands.find(b => raw <= b.max) || inst.bands[inst.bands.length - 1];
+    if (band.cls === 'b-high' || band.cls === 'b-sev') anyConcern = true;
+    return `
+      <div class="result">
+        <div class="result-head">
+          <div class="result-name">${escapeHtml(inst.name)} — ${escapeHtml(inst.title)}</div>
+          <div class="result-score">${raw}<small> / ${inst.max}</small></div>
+        </div>
+        <span class="badge ${band.cls}">${escapeHtml(band.label)}</span>
+        <p class="result-text">${escapeHtml(band.text)}</p>
+      </div>`;
+  }).join('');
+
+  app.innerHTML = `
+    <div class="eyebrow">Your results</div>
+    <h1>Self-Check Summary</h1>
+    <p>Below are your scores for each of the four areas. Please read the guidance alongside each score.</p>
+
+    <hr class="rule">
+
+    ${resultBlocks}
+
+    <hr class="rule">
+
+    <div class="disclaimer">
+      <strong>These are screening results, not diagnoses.</strong><br>
+      A high score does not mean you have a condition, and a low score does not rule one out. Screening tools are a starting point for a conversation — nothing more. Only a qualified professional can diagnose a mental health condition. If any of these results concerns you, please speak with someone.
+    </div>
+
+    ${anyConcern ? `
+    <div class="crisis">
+      <strong>One or more of your scores suggests it would be worth talking to someone.</strong><br>
+      This is a signal, not a diagnosis. You can approach ${escapeHtml(CONFIG.referral)}, or contact one of the services below.
+    </div>` : ''}
+
+    <div class="crisis">
+      <strong>If you are in crisis or need to speak with someone now:</strong><br>
+      ${escapeHtml(CONFIG.crisisLine)}<br>
+      ${escapeHtml(CONFIG.crisisLineAlt)}
+    </div>
+
+    <hr class="rule">
+    <p style="font-size:0.9rem;">Thank you for taking the time to check in with yourself. This is an act of self-care, and it matters.</p>
+
+    <div class="actions no-print">
+      <button class="btn-ghost" onclick="window.print()">Print / Save as PDF</button>
+      <button class="btn-ghost" onclick="reset()">Start Over</button>
+    </div>
+    <p class="privacy-note">Nothing you entered was sent anywhere. Refreshing this page will clear your results permanently.</p>
+  `;
+}
+
+/* ============================================================
+   HANDLERS
+   ============================================================ */
+function startCheck() {
+  state.screen = 'section';
+  state.section = 0;
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setAnswer(idx, value) {
+  const inst = INSTRUMENTS[state.section];
+  state.answers[inst.id][idx] = value;
+
+  // Update selection styling for this question only
+  const q = document.querySelector(`.q[data-idx="${idx}"]`);
+  if (q) {
+    q.querySelectorAll('.opt').forEach(opt => {
+      const input = opt.querySelector('input');
+      const matches = String(input.value) === String(value);
+      opt.classList.toggle('selected', matches);
+    });
+  }
+
+  // Enable next button if all answered
+  const arr = state.answers[inst.id];
+  const complete = arr.length === inst.items.length && arr.every(a => a !== undefined && a !== null);
+  const btn = document.getElementById('nextBtn');
+  if (btn) btn.disabled = !complete;
+}
+
+function nextSection() {
+  if (state.section < INSTRUMENTS.length - 1) {
+    state.section++;
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    state.screen = 'results';
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function prevSection() {
+  if (state.section > 0) {
+    state.section--;
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function reset() {
+  state.screen = 'welcome';
+  state.section = 0;
+  state.answers = Object.fromEntries(INSTRUMENTS.map(i => [i.id, []]));
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+render();
+</script>
+
+</body>
+</html>
